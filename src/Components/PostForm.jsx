@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { addPost } from '../redux/post/postAction';
+import { addPost, deleteAllPost } from '../redux/post/postAction';
 
 
 const PostForm = () => {
@@ -20,6 +20,7 @@ const PostForm = () => {
   console.log(store)
   return (
     <div className="post-form">
+    <button onClick={() => dispatch(deleteAllPost())}>Delete All Post</button>
       <h2>Create Post</h2>
       <form onSubmit={handleSubmit}>
         <label>

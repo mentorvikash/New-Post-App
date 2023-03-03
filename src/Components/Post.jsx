@@ -1,31 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import CommentForm from './CommentForm';
-import { useSelector, useDispatch } from "react-redux";
-import { deletePost } from '../redux/post/postAction';
-import { addComment } from '../redux/comment/commentAction';
+import {useDispatch, useSelector } from "react-redux";
+import { addComment ,  } from '../redux/comment/commentAction';
+import { deleteComment } from '../redux/comment/commentAction';
 
 const Post = ({ post, onDelete }) => {
-  const [comments, setComments] = React.useState([]);
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   console.log(comments);
-  // }, [comments])
+  const comments = useSelector(state => state.comment)
 
   const addCommentfun = (comment) => {
     dispatch(addComment(comment));
-    setComments([...comments, comment]);
   }
 
-  const deleteComment = (id) => {
-    const copyOfComments = [...comments]
-    const updatedComments = copyOfComments.filter((comment) => comment.postId !== id);
-    setComments(updatedComments);
+  const deleteCommentfun = (id) => {
+    dispatch(deleteComment(id));
   };
-
-
-  // create a random number
-  const id = Math.floor(Math.random() * 1000);
 
   return (
     <div className="post">
@@ -34,14 +23,14 @@ const Post = ({ post, onDelete }) => {
       <button onClick={() => onDelete(post.id)}>Delete</button>
       <h3>Comments</h3>
       <ul>
-        {comments.map((comment) => (
-          <li key={comment.postId}>
+        {comments.filter(el => el.postId === post.id).map((comment) => (
+          <li key={comment.id}>
             <strong>{comment.name}</strong> {comment.content}{' '}
-            <button onClick={() => deleteComment(comment.postId)}>Delete</button>
+            <button onClick={() => deleteCommentfun(comment.id)}>Delete</button>
           </li>
         ))}
       </ul>
-      <CommentForm postId={post.id + id} onComment={addCommentfun} />
+      <CommentForm postId={post.id} onComment={addCommentfun} />
     </div>
   );
 };
