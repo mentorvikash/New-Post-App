@@ -3,7 +3,7 @@ import React from 'react';
 const CommentForm = ({ postId, onComment }) => {
   const [name, setName] = React.useState('');
   const [content, setContent] = React.useState('');
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     onComment({ postId, name, content });

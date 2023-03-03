@@ -1,14 +1,19 @@
 import React, {useEffect} from 'react';
 import CommentForm from './CommentForm';
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from '../redux/post/postAction';
+import { addComment } from '../redux/comment/commentAction';
 
 const Post = ({ post, onDelete }) => {
   const [comments, setComments] = React.useState([]);
-  
-  useEffect(() => {
-    console.log(comments);
-  }, [comments])
+  const dispatch = useDispatch();
 
-  const addComment = (comment) => {
+  // useEffect(() => {
+  //   console.log(comments);
+  // }, [comments])
+
+  const addCommentfun = (comment) => {
+    dispatch(addComment(comment));
     setComments([...comments, comment]);
   }
 
@@ -18,9 +23,6 @@ const Post = ({ post, onDelete }) => {
     setComments(updatedComments);
   };
 
-  const deletePost = () => {
-    onDelete(post.id);
-  };
 
   // create a random number
   const id = Math.floor(Math.random() * 1000);
@@ -29,7 +31,7 @@ const Post = ({ post, onDelete }) => {
     <div className="post">
       <h2>{post.title}</h2>
       <p>{post.content}</p>
-      <button onClick={deletePost}>Delete</button>
+      <button onClick={() => onDelete(post.id)}>Delete</button>
       <h3>Comments</h3>
       <ul>
         {comments.map((comment) => (
@@ -39,7 +41,7 @@ const Post = ({ post, onDelete }) => {
           </li>
         ))}
       </ul>
-      <CommentForm postId={post.id + id} onComment={addComment} />
+      <CommentForm postId={post.id + id} onComment={addCommentfun} />
     </div>
   );
 };

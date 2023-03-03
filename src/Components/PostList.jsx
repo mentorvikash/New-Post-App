@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "./Post";
-import { deletePost } from "../store";
+import { deletePost } from "../redux/post/postAction";
 
 const PostList = () => {
-  const posts = useSelector((state) => state.posts);
+  const posts = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const handleDeletePost = (id) => {
@@ -13,7 +13,7 @@ const PostList = () => {
 
   return (
     <div className="post-list">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <Post key={post.id} post={post} onDelete={handleDeletePost} />
       ))}
     </div>

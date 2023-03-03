@@ -1,4 +1,4 @@
-import { ADD_COMMENT, DELETE_COMMENT } from './ commentAction';
+import { ADD_COMMENT, DELETE_COMMENT } from './commentType';
 
   // Reducers
   export const commentsReducer = (state = [], action) => {
