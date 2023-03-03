@@ -1,15 +1,20 @@
-import React from 'react';
-import Post from './Post';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Post from "./Post";
+import { deletePost } from "../store";
 
-const PostList = ({ posts, onDelete }) => {
-  const handleDelete = (id) => {
-    onDelete(id);
+const PostList = () => {
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
+  const handleDeletePost = (id) => {
+    dispatch(deletePost(id));
   };
 
   return (
     <div className="post-list">
       {posts.map((post) => (
-        <Post key={post.id} post={post} onDelete={handleDelete} />
+        <Post key={post.id} post={post} onDelete={handleDeletePost} />
       ))}
     </div>
   );

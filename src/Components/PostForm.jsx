@@ -1,12 +1,18 @@
 import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { addPost } from '../redux/post/postAction';
+
 
 const PostForm = ({ onSubmit }) => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, content });
+    dispatch(addPost({ title, content }))
+    // onSubmit({ title, content }); 
     setTitle('');
     setContent('');
   };
